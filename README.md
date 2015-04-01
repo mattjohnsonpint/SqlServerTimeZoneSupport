@@ -1,4 +1,4 @@
-# Sql Server Time Zone Support
+# SQL Server Time Zone Support
 
 This project add full support for time zones to Microsoft SQL Server.
 
@@ -45,7 +45,7 @@ SELECT Tzdb.UtcToLocal('2015-07-01 00:00:00', 'America/Los_Angeles')
 
 Converts a `datetime` or `datetime2` value from a specific time zone to UTC.  The output is a `datetimeoffset` value that has the correct UTC time and an offset of `+00:00`.
 
-Be aware that local-to-utc conversion is potentially a lossy operation.  For more details, consult [the dst tag wiki on StackOverflow][8], or my Pluralsight course, [Date and Time Fundamentals][9].
+Be aware that local-to-utc conversion is potentially a lossy operation.  For more details, consult [the dst tag wiki on StackOverflow][8].
 
 ```sql
 -- SYNTAX
@@ -112,7 +112,15 @@ SELECT Tzdb.GetZoneAbbreviation('2015-07-01 00:00:00 -04:00', 'America/New_York'
 -- output: 'EDT'
 ```
 
-### LICENSE
+### Shameless Plug
+
+If you want to learn more about time zones, and all of the lovely bits of programming that go around them, please consider watching my Pluralsight course, [Date and Time Fundamentals][9].
+
+I also have a blog at [CodeOfMatt.com][10], which covers several issues surrounding dates, times, and time zones.
+
+Thanks!
+
+### License
 
 This project is made freely available under [the MIT license][10].  Attribution is requested.
 
@@ -130,4 +138,5 @@ We use the following external resources:
 [7]: https://github.com/mj1856/SqlServerTimeZoneSupport/issues
 [8]: http://stackoverflow.com/tags/dst/info
 [9]: http://www.pluralsight.com/courses/date-time-fundamentals
-[10]: https://github.com/mj1856/SqlServerTimeZoneSupport/blob/master/LICENSE
+[10]: http://codeofmatt.com
+[11]: https://github.com/mj1856/SqlServerTimeZoneSupport/blob/master/LICENSE
