@@ -57,12 +57,12 @@ SELECT Tzdb.LocalToUtc('2015-07-01 00:00:00', 'America/Los_Angeles', 1, 1)
 ```
 
 - The `SkipOnSpringForwardGap` parameter has the following options:
-  - `1` : If a local time is in a DST gap, it is assumed that the clock *should* have sprung forward but didn't.  It therefore advances the time by the DST bias (usually 1 hour) so it can return a valid UTC time.  This is the default option.
-  - `0` : If a local time is in a DST gap, the function returns `NULL`.
+  - `1` : If a local time is in a DST gap due to the "spring-forward" DST transition, it is assumed that the clock *should* have sprung forward but didn't.  It therefore advances the time by the DST bias (usually 1 hour) so it can return a valid UTC time.  This is the default option.
+  - `0` : If a local time is in a DST gap due to the "spring-forward" DST transition, the function returns `NULL`.
 
 - The `FirstOnFallBackOverlap` parameter has the following options:
-  - `1` : If a local time is ambiguous, due to the "fall-back" DST transition, the *first* occurence is assumed.  This will always be the *daylight* time instance.  This is the default option.
-  - `0` : If a local time is ambiguous, due to the "fall-back" DST transition, the *second* occurence is assumed.  This will always be the *standard* time instance.
+  - `1` : If a local time is ambiguous due to the "fall-back" DST transition, the *first* occurence is assumed.  This will always be the *daylight* time instance.  This is the default option.
+  - `0` : If a local time is ambiguous due to the "fall-back" DST transition, the *second* occurence is assumed.  This will always be the *standard* time instance.
 
 
 #### ConvertZone
