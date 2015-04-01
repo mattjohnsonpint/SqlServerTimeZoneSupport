@@ -28,7 +28,7 @@ Our data comes from the [Noda Time TZDB NZD files][6], which in turn is generate
 
 We expose several user-defined functions for common time zone conversion operations.  If you need a function we don't have, please create an issue in [our issue tracker][7].
 
-##### `UtcToLocal`
+#### UtcToLocal
 
 Converts a `datetime` or `datetime2` value from UTC to a specific time zone.  The output is a `datetimeoffset` value that has the correct local time and offset for the time zone requested.
 
@@ -41,7 +41,7 @@ SELECT Tzdb.UtcToLocal('2015-07-01 00:00:00', 'America/Los_Angeles')
 -- output: '2015-06-30 17:00:00 -07:00'
 ```
 
-##### `LocalToUtc`
+#### LocalToUtc
 
 Converts a `datetime` or `datetime2` value from a specific time zone to UTC.  The output is a `datetimeoffset` value that has the correct UTC time and an offset of `+00:00`.
 
@@ -65,7 +65,7 @@ SELECT Tzdb.LocalToUtc('2015-07-01 00:00:00', 'America/Los_Angeles', 1, 1)
   - `0` : If a local time is ambiguous, due to the "fall-back" DST transition, the *second* occurence is assumed.  This will always be the *standard* time instance.
 
 
-##### `ConvertZone`
+#### ConvertZone
 
 Converts a `datetime` or `datetime2` value from a specific time zone to another specific time zone.  The output is a `datetimeoffset` value that has the correct local time and offset for the destination time zone requested.
 
@@ -80,7 +80,7 @@ SELECT Tzdb.ConvertZone('2015-07-01 00:00:00', 'America/Los_Angeles', 'Australia
 -- output: '2015-07-01 17:00:00 +10:00'
 ```
 
-##### `SwitchZone`
+#### SwitchZone
 
 Converts a `datetimeoffset` value to a specific time zone.  The output is a `datetimeoffset` value that has the correct local time and offset for the time zone requested.
 
@@ -95,7 +95,7 @@ SELECT Tzdb.SwitchZone('2015-07-01 00:00:00 -04:00', 'Asia/Kolkata')
 -- output: '2015-07-01 09:30:00 +05:30'
 ```
 
-##### `GetZoneAbbreviation`
+#### GetZoneAbbreviation
 
 Determines the correct abbreviation to use for the `datetimeoffset` value and time zone provided.  The output is a `varchar(10)` containing the abbreviation requested.
 
