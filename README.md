@@ -4,7 +4,9 @@ This project add full support for time zones to Microsoft SQL Server.
 
 This implementation uses the industry standard [IANA time zone database][1].  If you are used to Microsoft Windows time zones, such as used with .NET `TimeZoneInfo`, consider using IANA time zones by using the [Noda Time][2] library.
 
-You can read more about the IANA time zone database on [Wikipedia][3], and on [StackOverflow][4]
+You can read more about the IANA time zone database on [Wikipedia][3], and on [StackOverflow][4].
+
+[A list of supported time zones can be found here.][12]
 
 ### Installation
 
@@ -140,3 +142,4 @@ We use the following external resources:
 [9]: http://www.pluralsight.com/courses/date-time-fundamentals
 [10]: http://codeofmatt.com
 [11]: https://github.com/mj1856/SqlServerTimeZoneSupport/blob/master/LICENSE
+[12]: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
