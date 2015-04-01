@@ -12,7 +12,7 @@ You can read more about the IANA time zone database on [Wikipedia][3], and on [S
 2. Extract the zip file to a directory.
 3. Open the `tzdb.sql` file, and run it against your database.
    - It will create all objects in an independant schema called `[Tzdb]`.
-   - SQL 2008R2 and higher are supported, including SQL Azure Database.
+   - Microsoft SQL Server 2008 R2 and higher are supported, including Azure SQL Database.
 4. Edit the `SqlTzLoader.exe.config` file in a notepad, or any text editor.
    - Modify the connection string to point at your server and database, supplying any necessary authentication information.
 5. Run the `SqlTzLoader.exe` utility.
