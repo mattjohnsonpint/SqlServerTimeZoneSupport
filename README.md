@@ -11,7 +11,7 @@ You can read more about the IANA time zone database on [Wikipedia][3], and on [S
 1. Download the latest `sqltz.zip` file from [the releases page][5].
 2. Extract the zip file to a directory.
 3. Open the `tzdb.sql` file, and run it against your database.
-   - It will create all objects in an independant schema called `[Tzdb]`.
+   - It will create all objects in an independent schema called `[Tzdb]`.
    - Microsoft SQL Server 2008 R2 and higher are supported, including Azure SQL Database.
 4. Edit the `SqlTzLoader.exe.config` file in a notepad, or any text editor.
    - Modify the connection string to point at your server and database, supplying any necessary authentication information.
@@ -61,8 +61,8 @@ SELECT Tzdb.LocalToUtc('2015-07-01 00:00:00', 'America/Los_Angeles', 1, 1)
   - `0` : If a local time is in a DST gap due to the "spring-forward" DST transition, the function returns `NULL`.
 
 - The `FirstOnFallBackOverlap` parameter has the following options:
-  - `1` : If a local time is ambiguous due to the "fall-back" DST transition, the *first* occurence is assumed.  This will always be the *daylight* time instance.  This is the default option.
-  - `0` : If a local time is ambiguous due to the "fall-back" DST transition, the *second* occurence is assumed.  This will always be the *standard* time instance.
+  - `1` : If a local time is ambiguous due to the "fall-back" DST transition, the *first* occurrence is assumed.  This will always be the *daylight* time instance.  This is the default option.
+  - `0` : If a local time is ambiguous due to the "fall-back" DST transition, the *second* occurrence is assumed.  This will always be the *standard* time instance.
 
 
 #### ConvertZone
@@ -101,7 +101,7 @@ Determines the correct abbreviation to use for the `datetimeoffset` value and ti
 
 If you don't have a `datetimeoffset`, you should first obtain one either by using the `LocalToUtc` or `UtcToLocal` conversion functions, or by crafting it manually with SQL Server's `TODATETIMEOFFSET` function.  Do not pass a `datetime` or `datetime2` in, or the *server's* local time zone will get applied during the conversion.
 
-Note that the abbreviaions for many time zones depend on the specific date and time that they apply to.
+Note that the abbreviations for many time zones depend on the specific date and time that they apply to.
 
 ```sql
 -- SYNTAX
