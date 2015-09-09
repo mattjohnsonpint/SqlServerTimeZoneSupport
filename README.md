@@ -124,7 +124,7 @@ Thanks!
 
 ### License
 
-This project is made freely available under [the MIT license][10].  Attribution is requested.
+This project is made freely available under [the MIT license][11].  Attribution is requested.
 
 We use the following external resources:
 
