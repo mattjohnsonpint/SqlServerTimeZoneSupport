@@ -8,7 +8,7 @@
 RETURNS datetimeoffset
 AS
 BEGIN
-    DECLARE @OffsetMinutes smallint
+    DECLARE @OffsetMinutes int
 
     DECLARE @ZoneId int
     SET @ZoneId = [Tzdb].GetZoneId(@tz)
