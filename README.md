@@ -8,7 +8,7 @@ You can read more about the IANA time zone database on [Wikipedia][3], and on [S
 
 [A list of supported time zones can be found here.][12]
 
-**Note:** This is an official personal project, and is not developed or supported by Microsoft.
+**Note:** This is an un-official, personal project. It is not developed or supported by Microsoft.
 
 ### Installation
 
