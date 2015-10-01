@@ -8,6 +8,8 @@ You can read more about the IANA time zone database on [Wikipedia][3], and on [S
 
 [A list of supported time zones can be found here.][12]
 
+**Note:** This is an official personal project, and is not developed or supported by Microsoft.
+
 ### Installation
 
 1. Download the latest `sqltz.zip` file from [the releases page][5].
@@ -28,7 +30,7 @@ Our data comes from the [Noda Time TZDB NZD files][6], which in turn is generate
 
 ### Usage
 
-We expose several user-defined functions for common time zone conversion operations.  If you need a function we don't have, please create an issue in [our issue tracker][7].
+There are several user-defined functions exposed for common time zone conversion operations.  If you need additional functions, please create an issue in [the issue tracker][7].
 
 #### UtcToLocal
 
@@ -126,7 +128,7 @@ Thanks!
 
 This project is made freely available under [the MIT license][11].  Attribution is requested.
 
-We use the following external resources:
+This project uses the following external resources:
 
 - [Noda Time][2] (Apache licensed)
 - [IANA Time Zone Database][1] (public domain)
