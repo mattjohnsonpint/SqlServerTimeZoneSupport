@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Sqlservertimezonesupport : IANA Time Zone Support for Microsoft SQL Server">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Sqlservertimezonesupport</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/mj1856/SqlServerTimeZoneSupport">View on GitHub</a>
+
+          <h1 id="project_title">Sqlservertimezonesupport</h1>
+          <h2 id="project_tagline">IANA Time Zone Support for Microsoft SQL Server</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/mj1856/SqlServerTimeZoneSupport/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/mj1856/SqlServerTimeZoneSupport/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="sql-server-time-zone-support" class="anchor" href="#sql-server-time-zone-support" aria-hidden="true"><span class="octicon octicon-link"></span></a>SQL Server Time Zone Support</h1>
+
+<p>This project adds full support for time zones to Microsoft SQL Server.</p>
+
+<p>This implementation uses the industry standard <a href="http://www.iana.org/time-zones">IANA time zone database</a>.  If you are used to Microsoft Windows time zones, such as used with .NET <code>TimeZoneInfo</code>, consider using IANA time zones by using the <a href="http://nodatime.org">Noda Time</a> library.</p>
+
+<p>You can read more about the IANA time zone database on <a href="http://en.wikipedia.org/wiki/Tz_database">Wikipedia</a>, and on <a href="http://stackoverflow.com/tags/timezone/info">StackOverflow</a>.</p>
+
+<p><a href="http://en.wikipedia.org/wiki/List_of_tz_database_time_zones">A list of supported time zones can be found here.</a></p>
+
+<p><strong>Note:</strong> This is an un-official, personal project. It is not developed or supported by Microsoft.</p>
+
+<h3>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h3>
+
+<ol>
+<li>Download the latest <code>sqltz.zip</code> file from <a href="https://github.com/mj1856/SqlServerTimeZoneSupport/releases">the releases page</a>.</li>
+<li>Extract the zip file to a directory.</li>
+<li>Open the <code>tzdb.sql</code> file, and run it against your database.
+
+<ul>
+<li>It will create all objects in an independent schema called <code>[Tzdb]</code>.</li>
+<li>Microsoft SQL Server 2008 R2 and higher are supported, including Azure SQL Database.</li>
+</ul>
+</li>
+<li>Edit the <code>SqlTzLoader.exe.config</code> file in a notepad, or any text editor.
+
+<ul>
+<li>Modify the connection string to point at your server and database, supplying any necessary authentication information.</li>
+</ul>
+</li>
+<li>Run the <code>SqlTzLoader.exe</code> utility.
+
+<ul>
+<li>It will download the latest time zone data and populate the tables in the database.</li>
+</ul>
+</li>
+</ol>
+
+<h3>
+<a id="staying-current" class="anchor" href="#staying-current" aria-hidden="true"><span class="octicon octicon-link"></span></a>Staying Current</h3>
+
+<p>You can re-execute the <code>SqlTzLoader.exe</code> utility any time.  If new time zone data is available, it will download it and update the tables.  You can easily run this from SQL Agent, Windows Scheduler, or Azure Scheduler.  Please do not run it more than once daily.</p>
+
+<p>Our data comes from the <a href="http://nodatime.org/tzdb/">Noda Time TZDB NZD files</a>, which in turn is generated directly from IANA releases.  Therefore, you may notice a short delay between publishing of IANA TZDB and the updated NZD file being made available.</p>
+
+<h3>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h3>
+
+<p>There are several user-defined functions exposed for common time zone conversion operations.  If you need additional functions, please create an issue in <a href="https://github.com/mj1856/SqlServerTimeZoneSupport/issues">the issue tracker</a>.</p>
+
+<h4>
+<a id="utctolocal" class="anchor" href="#utctolocal" aria-hidden="true"><span class="octicon octicon-link"></span></a>UtcToLocal</h4>
+
+<p>Converts a <code>datetime</code> or <code>datetime2</code> value from UTC to a specific time zone.  The output is a <code>datetimeoffset</code> value that has the correct local time and offset for the time zone requested.</p>
+
+<div class="highlight highlight-source-sql"><pre><span class="pl-c">-- SYNTAX</span>
+<span class="pl-c1">Tzdb</span>.<span class="pl-c1">UtcToLocal</span>([utc_datetime], [dest_timezone])
+
+<span class="pl-c">-- EXAMPLE</span>
+<span class="pl-k">SELECT</span> <span class="pl-c1">Tzdb</span>.<span class="pl-c1">UtcToLocal</span>(<span class="pl-s"><span class="pl-pds">'</span>2015-07-01 00:00:00<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>America/Los_Angeles<span class="pl-pds">'</span></span>)
+<span class="pl-c">-- output: '2015-06-30 17:00:00 -07:00'</span></pre></div>
+
+<h4>
+<a id="localtoutc" class="anchor" href="#localtoutc" aria-hidden="true"><span class="octicon octicon-link"></span></a>LocalToUtc</h4>
+
+<p>Converts a <code>datetime</code> or <code>datetime2</code> value from a specific time zone to UTC.  The output is a <code>datetimeoffset</code> value that has the correct UTC time and an offset of <code>+00:00</code>.</p>
+
+<p>Be aware that local-to-utc conversion is potentially a lossy operation.  For more details, consult <a href="http://stackoverflow.com/tags/dst/info">the dst tag wiki on StackOverflow</a>.</p>
+
+<div class="highlight highlight-source-sql"><pre><span class="pl-c">-- SYNTAX</span>
+<span class="pl-c1">Tzdb</span>.<span class="pl-c1">LocalToUtc</span>([source_datetime], [source_timezone], [SkipOnSpringForwardGap], [FirstOnFallBackOverlap])
+
+<span class="pl-c">-- EXAMPLE</span>
+<span class="pl-k">SELECT</span> <span class="pl-c1">Tzdb</span>.<span class="pl-c1">LocalToUtc</span>(<span class="pl-s"><span class="pl-pds">'</span>2015-07-01 00:00:00<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>America/Los_Angeles<span class="pl-pds">'</span></span>, <span class="pl-c1">1</span>, <span class="pl-c1">1</span>)
+<span class="pl-c">-- output: '2015-07-01 07:00:00 +00:00'</span></pre></div>
+
+<ul>
+<li>
+<p>The <code>SkipOnSpringForwardGap</code> parameter has the following options:</p>
+
+<ul>
+<li>
+<code>1</code> : If a local time is in a DST gap due to the "spring-forward" DST transition, it is assumed that the clock <em>should</em> have sprung forward but didn't.  It therefore advances the time by the DST bias (usually 1 hour) so it can return a valid UTC time.  This is the default option.</li>
+<li>
+<code>0</code> : If a local time is in a DST gap due to the "spring-forward" DST transition, the function returns <code>NULL</code>.</li>
+</ul>
+</li>
+<li>
+<p>The <code>FirstOnFallBackOverlap</code> parameter has the following options:</p>
+
+<ul>
+<li>
+<code>1</code> : If a local time is ambiguous due to the "fall-back" DST transition, the <em>first</em> occurrence is assumed.  This will always be the <em>daylight</em> time instance.  This is the default option.</li>
+<li>
+<code>0</code> : If a local time is ambiguous due to the "fall-back" DST transition, the <em>second</em> occurrence is assumed.  This will always be the <em>standard</em> time instance.</li>
+</ul>
+</li>
+</ul>
+
+<h4>
+<a id="convertzone" class="anchor" href="#convertzone" aria-hidden="true"><span class="octicon octicon-link"></span></a>ConvertZone</h4>
+
+<p>Converts a <code>datetime</code> or <code>datetime2</code> value from a specific time zone to another specific time zone.  The output is a <code>datetimeoffset</code> value that has the correct local time and offset for the destination time zone requested.</p>
+
+<p>The DST option flags are the same as the <code>LocalToUtc</code> function, and apply to the <em>source</em> time zone only.</p>
+
+<div class="highlight highlight-source-sql"><pre><span class="pl-c">-- SYNTAX</span>
+<span class="pl-c1">Tzdb</span>.<span class="pl-c1">ConvertZone</span>([source_datetime], [source_timezone], [dest_timezone], [SkipOnSpringForwardGap], [FirstOnFallBackOverlap])
+
+<span class="pl-c">-- EXAMPLE</span>
+<span class="pl-k">SELECT</span> <span class="pl-c1">Tzdb</span>.<span class="pl-c1">ConvertZone</span>(<span class="pl-s"><span class="pl-pds">'</span>2015-07-01 00:00:00<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>America/Los_Angeles<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Australia/Sydney<span class="pl-pds">'</span></span>, <span class="pl-c1">1</span>, <span class="pl-c1">1</span>)
+<span class="pl-c">-- output: '2015-07-01 17:00:00 +10:00'</span></pre></div>
+
+<h4>
+<a id="switchzone" class="anchor" href="#switchzone" aria-hidden="true"><span class="octicon octicon-link"></span></a>SwitchZone</h4>
+
+<p>Converts a <code>datetimeoffset</code> value to a specific time zone.  The output is a <code>datetimeoffset</code> value that has the correct local time and offset for the time zone requested.</p>
+
+<p>This function is similar to SQL Server's <code>SWITCHOFFSET</code> function, however it accepts a time zone instead of an offset - so it can take daylight saving time into account.</p>
+
+<div class="highlight highlight-source-sql"><pre><span class="pl-c">-- SYNTAX</span>
+<span class="pl-c1">Tzdb</span>.<span class="pl-c1">SwitchZone</span>([source_datetimeoffset], [dest_timezone])
+
+<span class="pl-c">-- EXAMPLE</span>
+<span class="pl-k">SELECT</span> <span class="pl-c1">Tzdb</span>.<span class="pl-c1">SwitchZone</span>(<span class="pl-s"><span class="pl-pds">'</span>2015-07-01 00:00:00 -04:00<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Asia/Kolkata<span class="pl-pds">'</span></span>)
+<span class="pl-c">-- output: '2015-07-01 09:30:00 +05:30'</span></pre></div>
+
+<h4>
+<a id="getzoneabbreviation" class="anchor" href="#getzoneabbreviation" aria-hidden="true"><span class="octicon octicon-link"></span></a>GetZoneAbbreviation</h4>
+
+<p>Determines the correct abbreviation to use for the <code>datetimeoffset</code> value and time zone provided.  The output is a <code>varchar(10)</code> containing the abbreviation requested.</p>
+
+<p>If you don't have a <code>datetimeoffset</code>, you should first obtain one either by using the <code>LocalToUtc</code> or <code>UtcToLocal</code> conversion functions, or by crafting it manually with SQL Server's <code>TODATETIMEOFFSET</code> function.  Do not pass a <code>datetime</code> or <code>datetime2</code> in, or the <em>server's</em> local time zone will get applied during the conversion.</p>
+
+<p>Note that the abbreviations for many time zones depend on the specific date and time that they apply to.</p>
+
+<div class="highlight highlight-source-sql"><pre><span class="pl-c">-- SYNTAX</span>
+<span class="pl-c1">Tzdb</span>.<span class="pl-c1">GetZoneAbbreviation</span>([datetimeoffset], [timezone])
+
+<span class="pl-c">-- EXAMPLE</span>
+<span class="pl-k">SELECT</span> <span class="pl-c1">Tzdb</span>.<span class="pl-c1">GetZoneAbbreviation</span>(<span class="pl-s"><span class="pl-pds">'</span>2015-07-01 00:00:00 -04:00<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>America/New_York<span class="pl-pds">'</span></span>)
+<span class="pl-c">-- output: 'EDT'</span></pre></div>
+
+<h3>
+<a id="shameless-plug" class="anchor" href="#shameless-plug" aria-hidden="true"><span class="octicon octicon-link"></span></a>Shameless Plug</h3>
+
+<p>If you want to learn more about time zones, and all of the lovely bits of programming that go around them, please consider watching my Pluralsight course, <a href="http://www.pluralsight.com/courses/date-time-fundamentals">Date and Time Fundamentals</a>.</p>
+
+<p>I also have a blog at <a href="http://codeofmatt.com">CodeOfMatt.com</a>, which covers several issues surrounding dates, times, and time zones.</p>
+
+<p>Thanks!</p>
+
+<h3>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h3>
+
+<p>This project is made freely available under <a href="https://github.com/mj1856/SqlServerTimeZoneSupport/blob/master/LICENSE">the MIT license</a>.  Attribution is requested.</p>
+
+<p>This project uses the following external resources:</p>
+
+<ul>
+<li>
+<a href="http://nodatime.org">Noda Time</a> (Apache licensed)</li>
+<li>
+<a href="http://www.iana.org/time-zones">IANA Time Zone Database</a> (public domain)</li>
+</ul>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Sqlservertimezonesupport maintained by <a href="https://github.com/mj1856">mj1856</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
