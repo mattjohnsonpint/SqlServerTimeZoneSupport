@@ -14,10 +14,10 @@ namespace SqlTzLoader
     {
         private readonly HeadingInfo headingInfo = new HeadingInfo(System.Reflection.Assembly.GetExecutingAssembly().GetName().Name, System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
         
-        [Option('c', "connectionString", Required = false, HelpText = "Connectionstring of database to update. Default if not supplied is to read from App.config")]
+        [Option('c', "connectionString", Required = true, HelpText = "Connectionstring of database to update.")]
         public string ConnectionString { get; set; }
 
-        [Option('v', "verbose", DefaultValue = false, HelpText = "Prints all messages to standard output.")]
+        [Option('v', "verbose", HelpText = "Prints all messages to standard output.")]
         public bool Verbose { get; set; }
 
         [ParserState]
