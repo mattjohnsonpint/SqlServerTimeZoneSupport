@@ -12,9 +12,16 @@ namespace SqlTzLoader
 {
     class Program
     {
+        private static Options _options = new Options();
+
         static void Main(string[] args)
         {
-            AsyncPump.Run(() => MainAsync(args));
+            if (CommandLine.Parser.Default.ParseArgumentsStrict(args, _options))
+            {
+                if (_options.Verbose) Console.WriteLine("ConnectionString: {0}", _options.ConnectionString);
+                
+                AsyncPump.Run(() => MainAsync(args));
+            }          
         }
 
         static async Task MainAsync(string[] args)
@@ -34,7 +41,7 @@ namespace SqlTzLoader
         {
             var dictionary = new Dictionary<string, int>();
 
-            var cs = ConfigurationManager.ConnectionStrings["tzdb"].ConnectionString;
+            var cs = _options.ConnectionString;
             using (var connection = new SqlConnection(cs))
             {
                 var command = new SqlCommand("[Tzdb].[AddZone]", connection) { CommandType = CommandType.StoredProcedure };
@@ -57,7 +64,7 @@ namespace SqlTzLoader
 
         private static async Task WriteLinksAsync(IDictionary<string, int> zones, ILookup<string, string> aliases)
         {
-            var cs = ConfigurationManager.ConnectionStrings["tzdb"].ConnectionString;
+            var cs = _options.ConnectionString;
             using (var connection = new SqlConnection(cs))
             {
                 var command = new SqlCommand("[Tzdb].[AddLink]", connection) { CommandType = CommandType.StoredProcedure };
@@ -141,7 +148,7 @@ namespace SqlTzLoader
                         dt.Rows.Add(utcStart, utcEnd, localStart, localEnd, offsetMinutes, abbreviation);
                     }
 
-                    var cs = ConfigurationManager.ConnectionStrings["tzdb"].ConnectionString;
+                    var cs = _options.ConnectionString;
                     using (var connection = new SqlConnection(cs))
                     {
                         var command = new SqlCommand("[Tzdb].[SetIntervals]", connection)
@@ -163,7 +170,7 @@ namespace SqlTzLoader
 
         private static async Task WriteVersion(string version)
         {
-            var cs = ConfigurationManager.ConnectionStrings["tzdb"].ConnectionString;
+            var cs = _options.ConnectionString;
             using (var connection = new SqlConnection(cs))
             {
                 var command = new SqlCommand("[Tzdb].[SetVersion]", connection) { CommandType = CommandType.StoredProcedure };
