@@ -12,7 +12,7 @@ You can read more about the IANA time zone database on [Wikipedia][3], and on [S
 
 #### News:
 
-SQL Server 2016 CTP 3.1 includes built-in support for Windows time zones using a new `AT TIME ZONE` syntax.  If you only need support for Windows time zones (not IANA time zones), consider using this feature *instead of this project*.  Read [the news here](http://blogs.technet.com/b/dataplatforminsider/archive/2015/11/30/sql-server-2016-community-technology-preview-3-1-is-available.aspx), and [documentation here](https://msdn.microsoft.com/en-us/library/mt612795.aspx).
+SQL Server 2016 includes built-in support for Windows time zones using a new `AT TIME ZONE` syntax.  If you only need support for Windows time zones (not IANA time zones), consider using this feature *instead of this project*.  Read [the news here](http://blogs.technet.com/b/dataplatforminsider/archive/2015/11/30/sql-server-2016-community-technology-preview-3-1-is-available.aspx), and [documentation here](https://msdn.microsoft.com/en-us/library/mt612795.aspx).
 
 ### Installation
 
