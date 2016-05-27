@@ -2,10 +2,10 @@
 (
     @tz varchar(50)
 )
-RETURNS int
+RETURNS uniqueidentifier
 AS
 BEGIN
-    DECLARE @ZoneId int
+    DECLARE @ZoneId uniqueidentifier
 
     SELECT TOP 1 @ZoneId = l.[CanonicalZoneId]
     FROM [Tzdb].[Zones] z

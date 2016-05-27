@@ -37,9 +37,9 @@ namespace SqlTzLoader
             await WriteVersion(tzdb.VersionId.Split(' ')[1]);
         }
 
-        private static async Task<IDictionary<string, int>> WriteZonesAsync(IEnumerable<string> zones)
+        private static async Task<IDictionary<string, Guid>> WriteZonesAsync(IEnumerable<string> zones)
         {
-            var dictionary = new Dictionary<string, int>();
+            var dictionary = new Dictionary<string, Guid>();
 
             var cs = _options.ConnectionString;
             using (var connection = new SqlConnection(cs))
@@ -52,7 +52,7 @@ namespace SqlTzLoader
                 foreach (var zone in zones)
                 {
                     command.Parameters[0].Value = zone;
-                    var id = (int)await command.ExecuteScalarAsync();
+                    var id = (Guid)await command.ExecuteScalarAsync();
                     dictionary.Add(zone, id);
                 }
 
@@ -62,14 +62,14 @@ namespace SqlTzLoader
             return dictionary;
         }
 
-        private static async Task WriteLinksAsync(IDictionary<string, int> zones, ILookup<string, string> aliases)
+        private static async Task WriteLinksAsync(IDictionary<string, Guid> zones, ILookup<string, string> aliases)
         {
             var cs = _options.ConnectionString;
             using (var connection = new SqlConnection(cs))
             {
                 var command = new SqlCommand("[Tzdb].[AddLink]", connection) { CommandType = CommandType.StoredProcedure };
-                command.Parameters.Add("@LinkZoneId", SqlDbType.Int);
-                command.Parameters.Add("@CanonicalZoneId", SqlDbType.Int);
+                command.Parameters.Add("@LinkZoneId", SqlDbType.UniqueIdentifier);
+                command.Parameters.Add("@CanonicalZoneId", SqlDbType.UniqueIdentifier);
 
                 await connection.OpenAsync();
 
@@ -88,7 +88,7 @@ namespace SqlTzLoader
             }
         }
 
-        private static async Task WriteIntervalsAsync(IDictionary<string, int> zones, CurrentTzdbProvider tzdb)
+        private static async Task WriteIntervalsAsync(IDictionary<string, Guid> zones, CurrentTzdbProvider tzdb)
         {
             var currentUtcYear = SystemClock.Instance.Now.InUtc().Year;
             var maxYear = currentUtcYear + 5;

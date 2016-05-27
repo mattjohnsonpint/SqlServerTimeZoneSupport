@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [Tzdb].[SetIntervals]
-	@ZoneId int,
+	@ZoneId uniqueidentifier,
 	@Intervals [Tzdb].[IntervalTable] READONLY
 AS
 DELETE FROM [Tzdb].[Intervals] WHERE [ZoneId] = @ZoneId

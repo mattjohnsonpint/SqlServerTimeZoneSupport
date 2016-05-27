@@ -10,7 +10,7 @@ AS
 BEGIN
     DECLARE @OffsetMinutes int
 
-    DECLARE @ZoneId int
+    DECLARE @ZoneId uniqueidentifier
     SET @ZoneId = [Tzdb].GetZoneId(@tz)
 
     IF @FirstOnFallBackOverlap = 1

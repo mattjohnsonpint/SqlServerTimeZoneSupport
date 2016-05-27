@@ -1,8 +1,8 @@
 ﻿CREATE PROCEDURE [Tzdb].[AddLink]
-	@LinkZoneId int,
-	@CanonicalZoneId int
+	@LinkZoneId uniqueidentifier,
+	@CanonicalZoneId uniqueidentifier
 AS
-DECLARE @cid int
+DECLARE @cid uniqueidentifier
 SELECT @cid = @CanonicalZoneId FROM [Tzdb].[Links] WHERE [LinkZoneId] = @LinkZoneId
 IF @cid is null
 	INSERT INTO [Tzdb].[Links] ([LinkZoneId], [CanonicalZoneId]) VALUES (@LinkZoneId, @CanonicalZoneId)

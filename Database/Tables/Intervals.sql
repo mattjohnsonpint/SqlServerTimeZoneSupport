@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [Tzdb].[Intervals]
 (
     [Id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-    [ZoneId] INT NOT NULL,
+    [ZoneId] UNIQUEIDENTIFIER NOT NULL,
     [UtcStart] DATETIME2(0) NOT NULL,
     [UtcEnd] DATETIME2(0) NOT NULL,
     [LocalStart] DATETIME2(0) NOT NULL,
