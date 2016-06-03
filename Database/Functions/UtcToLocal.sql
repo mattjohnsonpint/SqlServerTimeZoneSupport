@@ -1,20 +1,18 @@
-﻿CREATE FUNCTION [Tzdb].[UtcToLocal]
+﻿CREATE FUNCTION Tzdb.UtcToLocal
 (
-    @utc datetime2,
-    @tz varchar(50)
+    @utc DATETIME2,
+    @tz VARCHAR(50)
 )
-RETURNS datetimeoffset
-AS
+RETURNS DATETIMEOFFSET
+WITH SCHEMABINDING AS
 BEGIN
-    DECLARE @OffsetMinutes int
+    DECLARE @OffsetMinutes INT
 
-    DECLARE @ZoneId int
-    SET @ZoneId = [Tzdb].GetZoneId(@tz)
 
     SELECT TOP 1 @OffsetMinutes = [OffsetMinutes]
-    FROM [Tzdb].[Intervals]
-    WHERE [ZoneId] = @ZoneId
-      AND [UtcStart] <= @utc AND [UtcEnd] > @utc
+    FROM [Tzdb].[Intervals] i INNER JOIN Tzdb.GetZoneId_Inline(@tz) z ON i.ZoneId = z.ZoneId
+    WHERE  [UtcStart] <= @utc AND [UtcEnd] > @utc
 
     RETURN TODATETIMEOFFSET(DATEADD(MINUTE, @OffsetMinutes, @utc), @OffsetMinutes)
 END
+GO
