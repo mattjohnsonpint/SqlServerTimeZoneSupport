@@ -13,7 +13,7 @@ BEGIN
     DECLARE @ZoneId int
     SET @ZoneId = [Tzdb].GetZoneId(@tz)
 
-    IF @FirstOnFallBackOverlap = 1
+    IF @FirstOnFallBackOverlap = 1 OR @FirstOnFallBackOverlap IS NULL
         SELECT TOP 1 @OffsetMinutes = [OffsetMinutes]
         FROM [Tzdb].[Intervals]
         WHERE [ZoneId] = @ZoneId
