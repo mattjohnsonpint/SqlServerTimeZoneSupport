@@ -1,11 +1,11 @@
 ﻿CREATE PROCEDURE [Tzdb].[AddZone]
     @Name varchar(50)
 AS
-DECLARE @id int
+DECLARE @id uniqueidentifier
 SELECT @id = [Id] FROM [Tzdb].[Zones] WHERE [Name] = @Name
 IF @id is null
 BEGIN
-    INSERT INTO [Tzdb].[Zones] ([Name]) VALUES (@Name)
-    SET @id = SCOPE_IDENTITY()
+	SELECT @id = CAST(HASHBYTES('MD5', @Name) AS UNIQUEIDENTIFIER)
+    INSERT INTO [Tzdb].[Zones] ([Id], [Name]) VALUES (@id, @Name)
 END
 SELECT @id as [Id]

@@ -8,7 +8,7 @@ AS
 BEGIN
     DECLARE @OffsetMinutes int
 
-    DECLARE @ZoneId int
+    DECLARE @ZoneId uniqueidentifier
     SET @ZoneId = [Tzdb].GetZoneId(@tz)
 
     SELECT TOP 1 @OffsetMinutes = [OffsetMinutes]

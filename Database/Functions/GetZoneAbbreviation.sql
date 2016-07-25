@@ -9,7 +9,7 @@ BEGIN
     DECLARE @utc datetime2
     SET @utc = CONVERT(datetime2, SWITCHOFFSET(@dto, 0))
 
-    DECLARE @ZoneId int
+    DECLARE @ZoneId uniqueidentifier
     SET @ZoneId = [Tzdb].GetZoneId(@tz)
 
     DECLARE @Abbreviation varchar(10)
