@@ -1,7 +1,6 @@
-﻿CREATE FUNCTION [tzdb].GetZoneId_Inline
+﻿CREATE FUNCTION [Tzdb].GetZoneId_Inline
 (
 	@tz VARCHAR(50)
-
 ) 
 RETURNS TABLE WITH SCHEMABINDING AS 
 RETURN (
