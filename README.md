@@ -21,16 +21,19 @@ SQL Server 2016 includes built-in support for Windows time zones using a new `AT
 3. Open the `tzdb.sql` file, and run it against your database.
    - It will create all objects in an independent schema called `[Tzdb]`.
    - Microsoft SQL Server 2008 R2 and higher are supported, including Azure SQL Database.
-4. Run the `SqlTzLoader.exe` utility.  
-   Pass the connection string on the command line with the `-c` parameter.  For example:
-     ```
-     SqlTzLoader.exe -c"Server=YourServerName;Database=YourDatabaseName;Trusted_Connection=True"
-     ```
-     or
-     ```
-     SqlTzLoader.exe -c"Server=YourServerName;Database=YourDatabaseName;User Id=foo;Password=bar"
-     ```
-     It will download the latest time zone data and populate the tables in the database.
+4. Run the `SqlTzLoader.exe` utility, passing the connection string with the `-c` parameter.  
+   For example:
+
+   ```bat
+   SqlTzLoader.exe -c"Server=YourServerName;Database=YourDatabaseName;Trusted_Connection=True"
+   ```
+   
+   or
+   
+   ```bat
+   SqlTzLoader.exe -c"Server=YourServerName;Database=YourDatabaseName;User Id=foo;Password=bar"
+   ```
+   It will download the latest time zone data and populate the tables in the database.
 
 ### Staying Current
 
