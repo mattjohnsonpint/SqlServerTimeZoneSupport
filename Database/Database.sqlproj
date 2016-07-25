@@ -81,5 +81,6 @@
     <Build Include="Functions\ConvertZone.sql" />
     <Build Include="Functions\GetZoneAbbreviation.sql" />
     <Build Include="Functions\GetZoneId.sql" />
+    <Build Include="Functions\GetZoneId_Inline.sql" />
   </ItemGroup>
 </Project>
