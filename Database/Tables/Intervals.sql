@@ -8,7 +8,7 @@
     [LocalEnd] DATETIME2(0) NOT NULL,
     [OffsetMinutes] SMALLINT NOT NULL,
     [Abbreviation] VARCHAR(10) NOT NULL,
-    CONSTRAINT [PK_Intervals] PRIMARY KEY ([Id])
+    CONSTRAINT [PK_Intervals] PRIMARY KEY ([Id]),
     CONSTRAINT [FK_Intervals_Zones] FOREIGN KEY ([ZoneId]) REFERENCES [Tzdb].[Zones]([Id])
 )
 
