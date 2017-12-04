@@ -25,8 +25,8 @@ BEGIN
     BEGIN
         IF @SkipOnSpringForwardGap = 0 RETURN NULL
 
-        SET @local = DATEADD(MINUTE, CASE @tz WHEN 'Australia/Lord_Howe' THEN 30 ELSE 60 END, @local)
-        SELECT TOP 1 @OffsetMinutes = [OffsetMinutes]
+        SET @local = DATEADD(DAY, -1, @local) -- shift a day back to be guaranteed you move back into previous interval
+        SELECT TOP 1 @OffsetMinutes = [OffsetMinutes] - 1440 -- subtracting number of minutes in a day from offset to account for previous shift
         FROM [Tzdb].[Intervals] i INNER JOIN Tzdb.GetZoneId_Inline(@tz) z ON z.ZoneId = i.ZoneId
         WHERE [LocalStart] <= @local AND [LocalEnd] > @local
     END
