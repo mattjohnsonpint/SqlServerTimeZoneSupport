@@ -8,28 +8,28 @@
 RETURNS datetimeoffset
 WITH SCHEMABINDING AS
 BEGIN
-    DECLARE @OffsetMinutes int
+    DECLARE @OffsetMinutes int;
 
     IF @FirstOnFallBackOverlap = 1
         SELECT TOP 1 @OffsetMinutes = [OffsetMinutes]
         FROM [Tzdb].[Intervals] i INNER JOIN Tzdb.GetZoneId_Inline(@tz) z ON z.ZoneId = i.ZoneId
-        WHERE [LocalStart] <= @local AND [LocalEnd] > @local
-        ORDER BY [UtcStart]
+        WHERE i.[LocalStart] <= @local AND i.[LocalEnd] > @local
+        ORDER BY i.[UtcStart] ASC;
     ELSE
         SELECT TOP 1 @OffsetMinutes = [OffsetMinutes]
         FROM [Tzdb].[Intervals] i INNER JOIN Tzdb.GetZoneId_Inline(@tz) z ON z.ZoneId = i.ZoneId
-        WHERE [LocalStart] <= @local AND [LocalEnd] > @local
-        ORDER BY [UtcStart] DESC
+        WHERE i.[LocalStart] <= @local AND i.[LocalEnd] > @local
+        ORDER BY i.[UtcStart] DESC;
 
     IF @OffsetMinutes IS NULL
     BEGIN
-        IF @SkipOnSpringForwardGap = 0 RETURN NULL
+        IF @SkipOnSpringForwardGap = 0 RETURN NULL;
 
-        SET @local = DATEADD(MINUTE, CASE @tz WHEN 'Australia/Lord_Howe' THEN 30 ELSE 60 END, @local)
-        SELECT TOP 1 @OffsetMinutes = [OffsetMinutes]
+        SELECT TOP 1 @OffsetMinutes = i.[OffsetMinutes]
         FROM [Tzdb].[Intervals] i INNER JOIN Tzdb.GetZoneId_Inline(@tz) z ON z.ZoneId = i.ZoneId
-        WHERE [LocalStart] <= @local AND [LocalEnd] > @local
-    END
+        WHERE i.[LocalEnd] <= @local
+        ORDER BY i.[UtcStart] DESC;
+    END;
 
-    RETURN TODATETIMEOFFSET(DATEADD(MINUTE, -@OffsetMinutes, @local), 0)
-END
+    RETURN TODATETIMEOFFSET(DATEADD(MINUTE, -@OffsetMinutes, @local), 0);
+END;
