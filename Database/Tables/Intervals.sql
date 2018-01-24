@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [Tzdb].[Intervals]
 (
-    [Id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    [Id] INT NOT NULL IDENTITY(1,1),
     [ZoneId] INT NOT NULL,
     [UtcStart] DATETIME2(0) NOT NULL,
     [UtcEnd] DATETIME2(0) NOT NULL,
@@ -8,6 +8,7 @@
     [LocalEnd] DATETIME2(0) NOT NULL,
     [OffsetMinutes] SMALLINT NOT NULL,
     [Abbreviation] VARCHAR(10) NOT NULL,
+    CONSTRAINT [PK_Intervals] PRIMARY KEY ([Id]),
     CONSTRAINT [FK_Intervals_Zones] FOREIGN KEY ([ZoneId]) REFERENCES [Tzdb].[Zones]([Id])
 )
 
