@@ -40,7 +40,7 @@ As a rule of thumb, changes are obvious fixes if they do not introduce any new f
 * Moving source files from one directory or package to another
 
 ## How to report a bug
-If you find a security vulnerability, do NOT open an issue. Email [mj1865](mj1856@hotmail.com) instead. In order to determine whether you are dealing with a security issue, ask yourself these two questions:
+If you find a security vulnerability, do NOT open an issue. Email [mj1865](mailto://mj1856@hotmail.com) instead. In order to determine whether you are dealing with a security issue, ask yourself these two questions:
 
 Can I access something that's not mine, or something I shouldn't have access to?
 Can I disable something for other people?
@@ -56,7 +56,7 @@ When filing an issue, make sure to answer these questions:
 * What did you see instead?
 
 ## How to suggest a feature or enhancement
-As noted in the introduction, SQL Server 2016 includes built-in support for Windows time zones using a new AT TIME ZONE syntax. If you only need support for Windows time zones (not IANA time zones), consider using this feature instead of this project. Read [the news here](http://blogs.technet.com/b/dataplatforminsider/archive/2015/11/30/sql-server-2016-community-technology-preview-3-1-is-available.aspx), and documentation [here](https://msdn.microsoft.com/en-us/library/mt612795.aspx).  <content to be added>
+As noted in the introduction, SQL Server 2016 includes built-in support for Windows time zones using a new AT TIME ZONE syntax. If you only need support for Windows time zones (not IANA time zones), consider using this feature instead of this project. Read [the news here](http://blogs.technet.com/b/dataplatforminsider/archive/2015/11/30/sql-server-2016-community-technology-preview-3-1-is-available.aspx), and documentation [here](https://msdn.microsoft.com/en-us/library/mt612795.aspx).  
 
 ## Code review process
 Explain how a contribution gets accepted after it’s been submitted.
