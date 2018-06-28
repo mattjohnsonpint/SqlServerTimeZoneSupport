@@ -31,16 +31,16 @@ Small contributions such as fixing spelling errors, where the content is small e
 
 As a rule of thumb, changes are obvious fixes if they do not introduce any new functionality or creative thinking. As long as the change does not affect functionality, some likely examples include the following:
 
-Spelling / grammar fixes
-Typo correction, white space and formatting changes
-Comment clean up
-Bug fixes that change default return values or error codes stored in constants
-Adding logging messages or debugging output
-Changes to ‘metadata’ files like Gemfile, .gitignore, build scripts, etc.
-Moving source files from one directory or package to another
+* Spelling / grammar fixes
+* Typo correction, white space and formatting changes
+* Comment clean up
+* Bug fixes that change default return values or error codes stored in constants
+* Adding logging messages or debugging output
+* Changes to ‘metadata’ files like Gemfile, .gitignore, build scripts, etc.
+* Moving source files from one directory or package to another
 
 ## How to report a bug
-If you find a security vulnerability, do NOT open an issue. Email mj1856 instead. In order to determine whether you are dealing with a security issue, ask yourself these two questions:
+If you find a security vulnerability, do NOT open an issue. Email [mj1865](mj1856@hotmail.com) instead. In order to determine whether you are dealing with a security issue, ask yourself these two questions:
 
 Can I access something that's not mine, or something I shouldn't have access to?
 Can I disable something for other people?
@@ -48,7 +48,7 @@ If the answer to either of those two questions are "yes", then you're probably d
 
 
 When filing an issue, make sure to answer these questions:
-* What "IDE" are you using (Visual Studio 2015  with SSDT, SSMS directly, notepad++, etc)? (if applicable)
+* What "IDE" are you using (Visual Studio 2015 with SSDT, SSMS directly, notepad++, etc)? (if applicable)
 * What SQL Server version are you using (both management tools  / client and SQL Engine)? (if applicable)
 * What operating system and processor architecture are you using?
 * What did you do?
@@ -64,6 +64,7 @@ Who reviews it? Who needs to sign off before it’s accepted? When should a cont
 
 The core team (basically Matt) looks at Pull Requests on a best effort basis. We seek to get better, and are looking for volunteers to co-maintain the library to increase the cadence.  
 
-> to be added - how to contact core team
+## How to contact core team
+Right now the core team is Matt.  You can reach me via [email](mailto://mj1856@hotmail.com) or on [twitter](https://twitter.com/mj1856)
 
 > to be added - code guidelines
