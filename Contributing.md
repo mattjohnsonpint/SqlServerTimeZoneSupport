@@ -7,18 +7,12 @@ We're looking for and eagerly accepting all contributions.  Whether you want to 
 
 
 ## Ground Rules
-> Content to be added
+Please review the [Contributor covenant](https://www.contributor-covenant.org/version/1/4/code-of-conduct.md) for acceptable behavior guidelines.  
 
 ## Your First Contribution
+Unsure where to begin contributing? Look for issues with an up-for-grabs or help-wanted tag.  
 
-Unsure where to begin contributing? You can start by looking through these beginner and help-wanted issues: 
-> to be added more content about 
-> Beginner issues - issues which should only require a few lines of code, and a test or two.
-> Help wanted issues - issues which should be a bit more involved than beginner issues. 
-> Both issue lists are sorted by total number of comments. While not perfect, number of comments is a reasonable proxy for impact a given change will have
-
-
-Working on your first Pull Request? You can learn how from this free series, How to Contribute to an Open Source Project on GitHub.
+Working on your first Pull Request? You can learn how from this free series, [How to Contribute to an Open Source Project on GitHub](https://egghead.io/series/how-to-contribute-to-an-open-source-project-on-github)
 
 # Getting started:
 For something that is bigger than a one or two line fix:
@@ -59,12 +53,8 @@ When filing an issue, make sure to answer these questions:
 As noted in the introduction, SQL Server 2016 includes built-in support for Windows time zones using a new AT TIME ZONE syntax. If you only need support for Windows time zones (not IANA time zones), consider using this feature instead of this project. Read [the news here](http://blogs.technet.com/b/dataplatforminsider/archive/2015/11/30/sql-server-2016-community-technology-preview-3-1-is-available.aspx), and documentation [here](https://msdn.microsoft.com/en-us/library/mt612795.aspx).  
 
 ## Code review process
-Explain how a contribution gets accepted after it’s been submitted.
-Who reviews it? Who needs to sign off before it’s accepted? When should a contributor expect to hear from you? How can contributors get commit access, if at all?
-
 The core team (basically Matt) looks at Pull Requests on a best effort basis. We seek to get better, and are looking for volunteers to co-maintain the library to increase the cadence.  
 
 ## How to contact core team
 Right now the core team is Matt.  You can reach me via [email](mailto://mj1856@hotmail.com) or on [twitter](https://twitter.com/mj1856)
 
-> to be added - code guidelines
