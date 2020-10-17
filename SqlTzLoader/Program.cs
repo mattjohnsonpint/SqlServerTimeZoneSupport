@@ -90,7 +90,7 @@ namespace SqlTzLoader
 
         private static async Task WriteIntervalsAsync(IDictionary<string, int> zones, CurrentTzdbProvider tzdb)
         {
-            var currentUtcYear = SystemClock.Instance.Now.InUtc().Year;
+            var currentUtcYear = SystemClock.Instance.GetCurrentInstant().InUtc().Year;
             var maxYear = currentUtcYear + 5;
             var maxInstant = new LocalDate(maxYear + 1, 1, 1).AtMidnight().InUtc().ToInstant();
 
@@ -114,12 +114,12 @@ namespace SqlTzLoader
                     var intervals = tzdb[id].GetZoneIntervals(Instant.MinValue, maxInstant);
                     foreach (var interval in intervals)
                     {
-
-                        var utcStart = interval.Start == Instant.MinValue
+                        
+                        var utcStart = !interval.HasStart
                             ? DateTime.MinValue
                             : interval.Start.ToDateTimeUtc();
 
-                        var utcEnd = interval.End == Instant.MaxValue
+                        var utcEnd = !interval.HasEnd
                             ? DateTime.MaxValue
                             : interval.End.ToDateTimeUtc();
 
@@ -147,6 +147,7 @@ namespace SqlTzLoader
 
                         dt.Rows.Add(utcStart, utcEnd, localStart, localEnd, offsetMinutes, abbreviation);
                     }
+                    if (_options.Verbose) Console.WriteLine("Processing: {0}", id);
 
                     var cs = _options.ConnectionString;
                     using (var connection = new SqlConnection(cs))
