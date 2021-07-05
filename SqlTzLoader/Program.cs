@@ -14,18 +14,15 @@ namespace SqlTzLoader
     {
         private static Options _options = new Options();
 
-        static void Main(string[] args)
+
+        static async Task Main(string[] args)
         {
             if (CommandLine.Parser.Default.ParseArgumentsStrict(args, _options))
             {
                 if (_options.Verbose) Console.WriteLine("ConnectionString: {0}", _options.ConnectionString);
-                
-                AsyncPump.Run(() => MainAsync(args));
-            }          
-        }
 
-        static async Task MainAsync(string[] args)
-        {
+            }
+
             var tzdb = await CurrentTzdbProvider.LoadAsync();
 
             var zones = await WriteZonesAsync(tzdb.Ids);
@@ -35,6 +32,20 @@ namespace SqlTzLoader
             await WriteIntervalsAsync(zones, tzdb);
 
             await WriteVersion(tzdb.VersionId.Split(' ')[1]);
+
+            await ExtendFinalIntervalToEndOfTime();
+        }
+        static async Task ExtendFinalIntervalToEndOfTime()
+        {
+            Console.Write("Extending final intervals to end of time");
+            var cs = _options.ConnectionString;
+            using (var connection = new SqlConnection(cs))
+            {
+                await connection.OpenAsync();
+                var command = new SqlCommand("update tzdb.intervals set utcend='9999-12-31 23:59:59', localend='9999-12-31 23:59:59' where utcend > '2026-02-08 07:00:00' and utcend <> '9999-12-31 23:59:59'", connection);
+                await command.ExecuteNonQueryAsync();
+                connection.Close();
+            }
         }
 
         private static async Task<IDictionary<string, int>> WriteZonesAsync(IEnumerable<string> zones)
@@ -114,7 +125,7 @@ namespace SqlTzLoader
                     var intervals = tzdb[id].GetZoneIntervals(Instant.MinValue, maxInstant);
                     foreach (var interval in intervals)
                     {
-                        
+
                         var utcStart = !interval.HasStart
                             ? DateTime.MinValue
                             : interval.Start.ToDateTimeUtc();
