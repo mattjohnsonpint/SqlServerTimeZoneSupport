@@ -110,3 +110,4 @@ UpgradeLog*.XML
 
 # Debug Data Directories
 App_Data
+.cr/
